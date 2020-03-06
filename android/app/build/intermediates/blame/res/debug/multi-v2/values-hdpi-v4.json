@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/nathalia/github/fastfeet-mobile/fastfeet/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hdpi-v4/values-hdpi-v4.xml",
+            "outputFile": "/home/nathalia/github/fastfeet-mobile/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hdpi-v4/values-hdpi-v4.xml",
             "map": [
                 {
-                    "source": "/home/nathalia/.gradle/caches/transforms-2/files-2.1/6ac490888941f16ffd237f685e8e101b/res/values-hdpi-v4/values-hdpi-v4.xml",
+                    "source": "/home/nathalia/.gradle/caches/transforms-2/files-2.1/6aeb0f52d9750bd6e028f583daa5c5c7/res/values-hdpi-v4/values-hdpi-v4.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/nathalia/github/fastfeet-mobile/fastfeet/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v26/values-v26.xml",
+            "outputFile": "/home/nathalia/github/fastfeet-mobile/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v26/values-v26.xml",
             "map": [
                 {
-                    "source": "/home/nathalia/.gradle/caches/transforms-2/files-2.1/6ac490888941f16ffd237f685e8e101b/res/values-v26/values-v26.xml",
+                    "source": "/home/nathalia/.gradle/caches/transforms-2/files-2.1/6aeb0f52d9750bd6e028f583daa5c5c7/res/values-v26/values-v26.xml",
                     "from": {
                         "startLines": "2,3,4,8,12,16",
                         "startColumns": "4,4,4,4,4,4",
