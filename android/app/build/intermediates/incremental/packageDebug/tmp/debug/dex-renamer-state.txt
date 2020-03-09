@@ -1,4 +1,4 @@
-#Thu Mar 05 22:18:04 BRT 2020
+#Sat Mar 07 11:08:30 BRT 2020
 base.0=/home/nathalia/github/fastfeet-mobile/android/app/build/intermediates/transforms/dexMerger/debug/0
 renamed.0=classes.dex
 path.0=classes.dex
