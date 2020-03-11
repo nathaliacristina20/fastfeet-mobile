@@ -21,6 +21,8 @@ import {
     Loading,
 } from './styles';
 
+import { STATUS } from '~/shared/constants';
+
 import Avatar from '~/components/Avatar';
 import DefaultEmptyMessage from '~/components/DefaultEmptyMessage';
 
@@ -35,10 +37,9 @@ export default function Dashboard({ navigation }) {
     );
 
     const [deliveries, setDeliveries] = useState([]);
+
     const [page, setPage] = useState(1);
-
-    const [status, setStatus] = useState('pendente');
-
+    const [status, setStatus] = useState(STATUS.pending.value);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -144,60 +145,56 @@ export default function Dashboard({ navigation }) {
                     </Logout>
                 </Header>
                 <Body>
-                    {!loading && deliveries.length < 1 && (
-                        <DefaultEmptyMessage />
-                    )}
-
+                    <DefaultEmptyMessage loading={loading} data={deliveries} />
                     {loading ? (
                         <Loading>
                             <ActivityIndicator color="#ddd" size={50} />
                         </Loading>
                     ) : (
-                        <>
-                            <BodyHeader>
-                                <DeliverymanName>Entregas</DeliverymanName>
+                            <>
+                                <BodyHeader>
+                                    <DeliverymanName>Entregas</DeliverymanName>
 
-                                <Options>
-                                    <StatusLink
-                                        onPress={() => setStatus('pendente')}
-                                    >
-                                        <StatusText
-                                            enabled={
-                                                status === 'pendente' && true
-                                            }
+                                    <Options>
+                                        <StatusLink
+                                            onPress={() => setStatus(STATUS.pending.value)}
                                         >
-                                            Pendentes
+                                            <StatusText
+                                                enabled={status === STATUS.pending.value && true
+                                                }
+                                            >
+                                                STATUS.pending.labelLink
                                         </StatusText>
-                                    </StatusLink>
-                                    <StatusLink
-                                        onPress={() => setStatus('entregues')}
-                                    >
-                                        <StatusText
-                                            enabled={
-                                                status === 'entregues' && true
-                                            }
+                                        </StatusLink>
+                                        <StatusLink
+                                            onPress={() => setStatus(STATUS.pending.delivered)}
                                         >
-                                            Entregues
+                                            <StatusText
+                                                enabled={
+                                                    status === STATUS.delivered && true
+                                                }
+                                            >
+                                                STATUS.delivered.labelLink
                                         </StatusText>
-                                    </StatusLink>
-                                </Options>
-                            </BodyHeader>
-                            <DeliveriesList
-                                data={deliveries}
-                                keyExtractor={delivery => String(delivery.id)}
-                                onRefresh={() => refreshList} // Função dispara quando o usuário arrasta a lista pra baixo
-                                refreshing={loading} // Variável que armazena um estado true/false que representa se a lista está atualizando
-                                onEndReachedThreshold={0.1} // Carrega mais itens quando chegar em 20% do fim
-                                onEndReached={loadMore} // Função que carrega mais itens
-                                renderItem={({ item: delivery }) => (
-                                    <Delivery
-                                        navigation={navigation}
-                                        delivery={delivery}
-                                    />
-                                )}
-                            />
-                        </>
-                    )}
+                                        </StatusLink>
+                                    </Options>
+                                </BodyHeader>
+                                <DeliveriesList
+                                    data={deliveries}
+                                    keyExtractor={delivery => String(delivery.id)}
+                                    onRefresh={() => refreshList} // Função dispara quando o usuário arrasta a lista pra baixo
+                                    refreshing={loading} // Variável que armazena um estado true/false que representa se a lista está atualizando
+                                    onEndReachedThreshold={0.1} // Carrega mais itens quando chegar em 20% do fim
+                                    onEndReached={loadMore} // Função que carrega mais itens
+                                    renderItem={({ item: delivery }) => (
+                                        <Delivery
+                                            navigation={navigation}
+                                            delivery={delivery}
+                                        />
+                                    )}
+                                />
+                            </>
+                        )}
                 </Body>
             </Content>
         </Container>

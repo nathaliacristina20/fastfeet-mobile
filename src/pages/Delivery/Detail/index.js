@@ -32,16 +32,16 @@ export default function DeliveryDetail({ navigation }) {
     const dateStartParsed = useMemo(() => {
         return delivery.start_date
             ? format(parseISO(delivery.start_date), "dd'/'MM'/'yyyy", {
-                  locale: pt,
-              })
+                locale: pt,
+            })
             : '--/--/--';
     }, []);
 
     const dateEndParsed = useMemo(() => {
         return delivery.end_date
             ? format(parseISO(delivery.end_date), "dd'/'MM'/'yyyy", {
-                  locale: pt,
-              })
+                locale: pt,
+            })
             : '--/--/--';
     }, []);
 
@@ -78,7 +78,7 @@ export default function DeliveryDetail({ navigation }) {
                         </Top>
                         <Detail>
                             <Label>STATUS</Label>
-                            <Text>{delivery.status}</Text>
+                            <Text>{delivery.status.label}</Text>
                         </Detail>
 
                         <DetailRow>

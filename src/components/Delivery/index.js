@@ -34,7 +34,7 @@ export default function Delivery({ navigation, delivery }) {
                     <Icon name="local-shipping" size={20} color="#7d40e7" />
                     <Title>{delivery.name}</Title>
                 </Top>
-                <Progress stepActive={delivery.status} />
+                <Progress stepActive={delivery.status.id} />
             </Content>
             <Footer>
                 <FooterContent>
