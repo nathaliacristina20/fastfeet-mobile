@@ -31,21 +31,21 @@ export const FooterContent = styled.View`
     margin: 10px;
 `;
 
-export const Infos = styled.View`
+export const Cards = styled.View`
     flex-direction: row;
     justify-content: center;
 `;
 
-export const Info = styled.View`
+export const Card = styled.View`
     margin-right: 10px;
 `;
 
-export const InfoTitle = styled.Text`
+export const Label = styled.Text`
     color: #999999;
     font-size: 10px;
 `;
 
-export const InfoText = styled.Text`
+export const Value = styled.Text`
     color: #444444;
     font-size: 16px;
     font-weight: bold;

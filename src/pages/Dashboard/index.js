@@ -18,13 +18,10 @@ import {
     StatusLink,
     StatusText,
     DeliveriesList,
+    DefaultEmptyMessage,
     Loading,
 } from './styles';
-
-import { STATUS } from '~/shared/constants';
-
 import Avatar from '~/components/Avatar';
-import DefaultEmptyMessage from '~/components/DefaultEmptyMessage';
 
 import api from '~/services/api';
 import { signOut } from '~/store/modules/auth/actions';
@@ -36,28 +33,36 @@ export default function Dashboard({ navigation }) {
         useSelector(state => state.auth.deliveryman)
     );
 
+    const [options] = useState([
+        { key: 1, label: 'Pendentes', active: false },
+        { key: 3, label: 'Entregues', active: false },
+    ]);
+
+    const [numberOfPages, setNumberOfPages] = useState();
+
     const [deliveries, setDeliveries] = useState([]);
 
     const [page, setPage] = useState(1);
-    const [status, setStatus] = useState(STATUS.pending.value);
+    const [status, setStatus] = useState(1);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
         async function loadDeliveries() {
             try {
-                const { data } = await api.get(
+                const response = await api.get(
                     `deliveryman/${deliveryman.id}/deliveries`,
                     {
                         params: {
                             page,
-                            perPage: 5,
+                            perPage: 3,
                             status,
                         },
                     }
                 );
 
-                setDeliveries(data);
+                setNumberOfPages(response.data.numberOfPages);
+                setDeliveries(response.data.deliveries);
             } catch (err) {
                 if (err.response.status === 400) {
                     Alert.alert('Falha', err.response.data.error);
@@ -71,50 +76,44 @@ export default function Dashboard({ navigation }) {
     }, [status]);
 
     async function loadMore() {
-        console.tron.log(`load more! `);
-        // const { data } = await api.get(
-        //     `deliveryman/${deliveryman.id}/deliveries`,
-        //     {
-        //         params: {
-        //             page,
-        //             perPage: 3,
-        //         },
-        //     }
-        // );
+        if (page + 1 > numberOfPages) {
+            return;
+        }
+        try {
+            const response = await api.get(
+                `deliveryman/${deliveryman.id}/deliveries`,
+                {
+                    params: {
+                        page: page + 1,
+                        perPage: 3,
+                        status,
+                    },
+                }
+            );
 
-        // const dataParsed = data.map(delivery => ({
-        //     ...delivery,
-        //     updatedAtParsed: format(
-        //         parseISO(delivery.updatedAt),
-        //         "dd'/'MM'/'yyyy",
-        //         {
-        //             locale: pt,
-        //         }
-        //     ),
-        // }));
-        // console.tron.log(`data `, dataParsed);
-        // setDeliveries(dataParsed);
-    }
+            const deliveriesPagesConcat = deliveries.concat(
+                response.data.deliveries
+            );
 
-    async function refreshList() {
-        console.tron.log(`refresh list! `);
-        // const { navigation } = this.props;
-        // const user = navigation.getParam('user');
-
-        // const response = await api.get(`/users/${user.login}/starred`, {
-        //     params: {
-        //         per_page: 30,
-        //         page: 1,
-        //     },
-        // });
-
-        // this.setState({
-        //     stars: response.data,
-        // });
+            setPage(page + 1);
+            setDeliveries(deliveriesPagesConcat);
+        } catch (err) {
+            if (err.response.status === 400) {
+                Alert.alert('Falha', err.response.data.error);
+            } else {
+                Alert.alert('Falha', 'Ocorreu um erro inesperado.');
+            }
+        }
     }
 
     function handleLogout() {
         dispatch(signOut());
+    }
+
+    function handleStatus(option) {
+        setLoading(true);
+        setPage(1);
+        setStatus(option);
     }
 
     return (
@@ -145,56 +144,46 @@ export default function Dashboard({ navigation }) {
                     </Logout>
                 </Header>
                 <Body>
-                    <DefaultEmptyMessage loading={loading} data={deliveries} />
+                    {!loading && deliveries.length < 1 && (
+                        <DefaultEmptyMessage>
+                            Não há registros a serem exibidos.
+                        </DefaultEmptyMessage>
+                    )}
+                    <BodyHeader>
+                        <DeliverymanName>Entregas</DeliverymanName>
+                        <Options>
+                            {options.map(option => (
+                                <StatusLink
+                                    key={option.label}
+                                    onPress={() => handleStatus(option.key)}
+                                >
+                                    <StatusText enabled={status === option.key}>
+                                        {option.label}
+                                    </StatusText>
+                                </StatusLink>
+                            ))}
+                        </Options>
+                    </BodyHeader>
                     {loading ? (
                         <Loading>
                             <ActivityIndicator color="#ddd" size={50} />
                         </Loading>
                     ) : (
-                            <>
-                                <BodyHeader>
-                                    <DeliverymanName>Entregas</DeliverymanName>
-
-                                    <Options>
-                                        <StatusLink
-                                            onPress={() => setStatus(STATUS.pending.value)}
-                                        >
-                                            <StatusText
-                                                enabled={status === STATUS.pending.value && true
-                                                }
-                                            >
-                                                STATUS.pending.labelLink
-                                        </StatusText>
-                                        </StatusLink>
-                                        <StatusLink
-                                            onPress={() => setStatus(STATUS.pending.delivered)}
-                                        >
-                                            <StatusText
-                                                enabled={
-                                                    status === STATUS.delivered && true
-                                                }
-                                            >
-                                                STATUS.delivered.labelLink
-                                        </StatusText>
-                                        </StatusLink>
-                                    </Options>
-                                </BodyHeader>
-                                <DeliveriesList
-                                    data={deliveries}
-                                    keyExtractor={delivery => String(delivery.id)}
-                                    onRefresh={() => refreshList} // Função dispara quando o usuário arrasta a lista pra baixo
-                                    refreshing={loading} // Variável que armazena um estado true/false que representa se a lista está atualizando
-                                    onEndReachedThreshold={0.1} // Carrega mais itens quando chegar em 20% do fim
-                                    onEndReached={loadMore} // Função que carrega mais itens
-                                    renderItem={({ item: delivery }) => (
-                                        <Delivery
-                                            navigation={navigation}
-                                            delivery={delivery}
-                                        />
-                                    )}
-                                />
-                            </>
-                        )}
+                        <>
+                            <DeliveriesList
+                                data={deliveries}
+                                keyExtractor={delivery => String(delivery.id)}
+                                onEndReachedThreshold={0.3} // Carrega mais itens quando chegar em 20% do fim
+                                onEndReached={loadMore} // Função que carrega mais itens
+                                renderItem={({ item: delivery }) => (
+                                    <Delivery
+                                        navigation={navigation}
+                                        delivery={delivery}
+                                    />
+                                )}
+                            />
+                        </>
+                    )}
                 </Body>
             </Content>
         </Container>

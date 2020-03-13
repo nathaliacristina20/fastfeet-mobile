@@ -66,24 +66,24 @@ export default function DeliveryProblems({ navigation }) {
                         <ActivityIndicator color="#ddd" size={50} />
                     </Loading>
                 ) : (
-                        <>
-                            <Problems
-                                data={problems}
-                                refreshing={loading}
-                                keyExtractor={problem => String(problem.id)}
-                                renderItem={({ item: problem }) => (
-                                    <Problem>
-                                        <ProblemDescription>
-                                            {problem.description}
-                                        </ProblemDescription>
-                                        <ProblemDate>
-                                            {problem.createdAt}
-                                        </ProblemDate>
-                                    </Problem>
-                                )}
-                            />
-                        </>
-                    )}
+                    <>
+                        <Problems
+                            data={problems}
+                            refreshing={loading}
+                            keyExtractor={problem => String(problem.id)}
+                            renderItem={({ item: problem }) => (
+                                <Problem>
+                                    <ProblemDescription>
+                                        {problem.description}
+                                    </ProblemDescription>
+                                    <ProblemDate>
+                                        {problem.createdAt}
+                                    </ProblemDate>
+                                </Problem>
+                            )}
+                        />
+                    </>
+                )}
             </Content>
         </Container>
     );

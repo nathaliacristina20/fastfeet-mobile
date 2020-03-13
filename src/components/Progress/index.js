@@ -1,40 +1,36 @@
 import React, { useState, useEffect } from 'react';
-
+import { ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
-import { Container, List } from './styles';
-import Step from '~/components/Progress/Step';
-
-import { STATUS } from '../../shared/constants';
+import { Container, List, ContainerT, Circle, StepT, Name } from './styles';
 
 export default function Progress({ stepActive }) {
-    const [progress] = useState(STATUS);
+    const [progress] = useState([
+        { key: 1, label: 'Aguardando Retirada', active: true },
+        { key: 4, label: 'Retirada', active: false },
+        { key: 3, label: 'Entregue', active: false },
+    ]);
 
-    // const [progress] = useState([
-    //     { key: 'pendente', label: 'Aguardando Retirada', active: true },
-    //     { key: 'retirada', label: 'Retirada', active: false },
-    //     { key: 'entregue', label: 'Entregue', active: false },
-    // ]);
-
-    const [loading, setLoading] = useState(true);
     const [steps, setSteps] = useState([]);
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        function loadSteps() {
+        async function loadSteps() {
             const checkedSteps = [];
             let finded = false;
-            for (var step in progress) {
-                console.log(progress[step].label);
-                if (step.value !== stepActive && !finded) {
+            progress.forEach(step => {
+                if (step.key !== stepActive && !finded) {
                     checkedSteps.push({ ...step, active: true });
                 }
-                if (step.value !== stepActive && finded) {
+                if (step.key !== stepActive && finded) {
                     checkedSteps.push({ ...step, active: false });
                 }
-                if (step.value === stepActive) {
+                if (step.key === stepActive) {
                     finded = true;
                     checkedSteps.push({ ...step, active: true });
                 }
-            }
+            });
+
             setSteps(checkedSteps);
             setLoading(false);
         }
@@ -43,14 +39,23 @@ export default function Progress({ stepActive }) {
 
     return (
         <Container>
-            <List
-                data={steps}
-                keyExtractor={step => step.key}
-                refreshing={loading}
-                renderItem={({ item: step }) => (
-                    <Step name={step.label} active={step.active} />
-                )}
-            />
+            {loading ? (
+                <ActivityIndicator size="large" color="#ddd" />
+            ) : (
+                <List
+                    data={steps}
+                    keyExtractor={step => String(step.key)}
+                    refreshing={loading}
+                    renderItem={({ item: step }) => (
+                        <ContainerT>
+                            <StepT>
+                                <Circle active={step.active} />
+                                <Name>{step.label}</Name>
+                            </StepT>
+                        </ContainerT>
+                    )}
+                />
+            )}
         </Container>
     );
 }
@@ -58,7 +63,7 @@ export default function Progress({ stepActive }) {
 Progress.propTypes = {
     // progress: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
     // .isRequired,
-    stepActive: PropTypes.string.isRequired,
+    stepActive: PropTypes.number.isRequired,
 };
 
 Progress.defaultProps = {};

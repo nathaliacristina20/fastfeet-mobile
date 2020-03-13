@@ -10,10 +10,10 @@ import {
     Title,
     Footer,
     FooterContent,
-    Infos,
-    Info,
-    InfoTitle,
-    InfoText,
+    Cards,
+    Card,
+    Label,
+    Value,
     DetailsLink,
     DetailsLinkText,
 } from './styles';
@@ -32,22 +32,22 @@ export default function Delivery({ navigation, delivery }) {
             <Content>
                 <Top>
                     <Icon name="local-shipping" size={20} color="#7d40e7" />
-                    <Title>{delivery.name}</Title>
+                    <Title>{delivery.product}</Title>
                 </Top>
-                <Progress stepActive={delivery.status.id} />
+                <Progress stepActive={delivery.status.value} />
             </Content>
             <Footer>
                 <FooterContent>
-                    <Infos>
-                        <Info>
-                            <InfoTitle>Data</InfoTitle>
-                            <InfoText>{dataUpdatedAtParsed}</InfoText>
-                        </Info>
-                        <Info>
-                            <InfoTitle>Cidade</InfoTitle>
-                            <InfoText>{delivery.recipient.city}</InfoText>
-                        </Info>
-                    </Infos>
+                    <Cards>
+                        <Card>
+                            <Label>Data</Label>
+                            <Value>{dataUpdatedAtParsed}</Value>
+                        </Card>
+                        <Card>
+                            <Label>Cidade</Label>
+                            <Value>{delivery.recipient.city}</Value>
+                        </Card>
+                    </Cards>
                     <DetailsLink
                         onPress={() =>
                             navigation.navigate('DeliveryDetail', {

@@ -1,8 +1,12 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View``;
+export const Container = styled.View`
+    flex: 1;
+`;
+
 export const Content = styled.View`
     margin: 0 20px 0 20px;
+    flex: 1;
 `;
 
 export const Header = styled.View`
@@ -29,6 +33,7 @@ export const DeliveriesList = styled.FlatList.attrs({
     showsVerticalScrollIndicator: false,
 })`
     margin-top: 10px;
+    flex: 1;
 `;
 
 export const DeliverymanName = styled.Text`
@@ -41,7 +46,9 @@ export const Logout = styled.View`
     justify-content: center;
 `;
 
-export const Body = styled.View``;
+export const Body = styled.View`
+    flex: 1;
+`;
 
 export const BodyHeader = styled.View`
     display: flex;
@@ -68,4 +75,11 @@ export const Loading = styled.View`
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+`;
+
+export const DefaultEmptyMessage = styled.Text`
+    margin-top: 20px;
+    color: #666666;
+    font-size: 12px;
+    text-align: center;
 `;
