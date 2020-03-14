@@ -19,6 +19,8 @@ import {
 
 import DefaultEmptyMessage from '~/components/DefaultEmptyMessage';
 
+import { Header } from '~/styles/global';
+
 export default function DeliveryProblems({ navigation }) {
     const [delivery] = useState(navigation.getParam('delivery'));
     const [problems, setProblems] = useState([]);
@@ -56,6 +58,7 @@ export default function DeliveryProblems({ navigation }) {
 
     return (
         <Container>
+            <Header />
             <Content>
                 <Title>{delivery.product}</Title>
 

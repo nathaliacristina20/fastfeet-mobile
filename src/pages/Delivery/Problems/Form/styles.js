@@ -1,14 +1,17 @@
 import styled from 'styled-components/native';
 
-import Button from '~/components/Button';
+import Button from '~/components/Form/Button';
 
 export const Container = styled.SafeAreaView``;
 
 export const Content = styled.View`
-    margin: 68px 20px 0 20px;
+    margin: 10px 20px 0 20px;
+    width: 90%;
+    flex: 1;
+    margin-top: -60px;
 `;
 
-export const InputStyle = styled.TextInput.attrs({
+export const TextArea = styled.TextInput.attrs({
     placeholderTextColor: '#999999',
 })`
     height: 300px;
@@ -17,6 +20,7 @@ export const InputStyle = styled.TextInput.attrs({
     background: #fff;
     border-radius: 4px;
     border: 1px solid #0000001a;
+    padding: 20px;
 `;
 
 export const SubmitButton = styled(Button)`

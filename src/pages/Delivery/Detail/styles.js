@@ -1,35 +1,40 @@
 import styled from 'styled-components/native';
 
-// styled.ScrollView.attrs({
-//     showsVerticalScrollIndicator: false,
-//     contentContainerStyle: { padding: 10 },
-// })`
+import { Dimensions } from 'react-native';
 
 export const Container = styled.SafeAreaView`
     flex: 1;
+    align-items: center;
 `;
 
-export const Container2 = styled.View`
-    background: #7d40e7;
-    /* background: #7d40e7;
-    height: 115px; */
+export const Header = styled.View`
+    background-color: #7159c1;
+    width: 100%;
+    height: 70px;
+    position: relative;
 `;
 
 export const Content = styled.ScrollView.attrs({
     showsVerticalScrollIndicator: false,
-    contentContainerStyle: { padding: 10 },
 })`
-    margin: 50px 20px 0 20px;
+    margin: 10px 20px 0 20px;
+    width: 90%;
+    flex: 1;
+    margin-top: -60px;
+    /* ${Dimensions.get('window').height / 2000} */
 `;
 
-export const Cards = styled.View``;
+export const Cards = styled.View`
+    /* background: blue; */
+`;
 
 export const Card = styled.View`
     background: #fff;
     border: 1px solid #0000001a;
-    padding: 13px;
+    padding: 10px;
     border-radius: 8px;
     margin-bottom: 8px;
+    width: 100%;
 `;
 
 export const Top = styled.View`
@@ -60,6 +65,7 @@ export const Label = styled.Text`
 export const Text = styled.Text`
     font-size: 14px;
     color: #666666;
+    margin-top: 5px;
 `;
 
 export const Buttons = styled.View`
@@ -70,6 +76,7 @@ export const Buttons = styled.View`
     border-left-width: 1px;
     border-color: #0000001a;
     background: #f8f9fd;
+    margin-bottom: 10px;
 `;
 
 export const Button = styled.TouchableOpacity`

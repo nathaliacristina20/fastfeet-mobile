@@ -192,6 +192,7 @@ export default function Dashboard({ navigation }) {
 
 Dashboard.navigationOptions = {
     title: null,
+    headerTransparent: true,
 };
 
 Dashboard.propTypes = {

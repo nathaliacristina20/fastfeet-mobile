@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { View, Text } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -33,15 +33,19 @@ export default (signedIn = false) =>
                                 },
                                 {
                                     defaultNavigationOptions: {
-                                        headerTransparent: true,
+                                        headerTitleAlign: 'center',
+                                        headerTransparent: false,
+                                        headerStyle: {
+                                            backgroundColor: '#7159c1',
+                                            elevation: 0,
+                                        },
                                         headerLeftContainerStyle: {
-                                            marginLeft: 20,
+                                            marginLeft: 10,
                                         },
                                         headerTitleStyle: {
                                             fontSize: 16,
                                             fontWeight: 'bold',
                                             color: '#fff',
-                                            marginLeft: 30,
                                         },
                                     },
                                 }
@@ -52,7 +56,7 @@ export default (signedIn = false) =>
                                 tabBarIcon: ({ tintColor }) => (
                                     <Icon
                                         name="reorder"
-                                        size={20}
+                                        size={18}
                                         color={tintColor}
                                     />
                                 ),
@@ -67,7 +71,11 @@ export default (signedIn = false) =>
                             activeTintColor: '#7D40E7',
                             inactiveTintColor: '#999999',
                             style: {
+                                paddingTop: 8,
+                                paddingBottom: 10,
                                 backgroundColor: '#fff',
+                                borderTopColor: '#00000026',
+                                elevation: 8,
                             },
                         },
                     }

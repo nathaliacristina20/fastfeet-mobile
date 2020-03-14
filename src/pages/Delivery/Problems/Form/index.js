@@ -4,8 +4,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import PropTypes from 'prop-types';
 
-import { Container, Content, InputStyle, SubmitButton } from './styles';
+import { Container, Content, TextArea, SubmitButton } from './styles';
 import api from '~/services/api';
+
+import { Header } from '~/styles/global';
 
 export default function DeliveryForm({ navigation }) {
     const [description, setDescription] = useState(null);
@@ -31,8 +33,11 @@ export default function DeliveryForm({ navigation }) {
 
     return (
         <Container>
+            <Header />
             <Content>
-                <InputStyle
+                <TextArea
+                    textAlignVertical="top"
+                    multiline
                     autoCorrect={false}
                     autoCapitalize="none"
                     placeholder="Inclua aqui o problema que ocorreu na entrega."

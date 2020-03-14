@@ -20,6 +20,7 @@ import {
     Button,
     ButtonIcon,
     ButtonText,
+    Header,
 } from './styles';
 
 export default function DeliveryDetail({ navigation }) {
@@ -46,87 +47,94 @@ export default function DeliveryDetail({ navigation }) {
     }, []);
 
     return (
-        <Container>
-            <Content>
-                <Cards>
-                    <Card>
-                        <Top>
-                            <Icon
-                                name="local-shipping"
-                                size={20}
-                                color="#7d40e7"
-                            />
-                            <CardTitle>Informações da entrega</CardTitle>
-                        </Top>
-                        <Detail>
-                            <Label>DESTINATÁRIO</Label>
-                            <Text>{delivery.recipient.name}</Text>
-                        </Detail>
-                        <Detail>
-                            <Label>ENDEREÇO DE ENTREGA</Label>
-                            <Text>{address}</Text>
-                        </Detail>
-                        <Detail>
-                            <Label>PRODUTO</Label>
-                            <Text>{delivery.product}</Text>
-                        </Detail>
-                    </Card>
-                    <Card>
-                        <Top>
-                            <Icon name="event" size={20} color="#7d40e7" />
-                            <CardTitle>Situação da entrega</CardTitle>
-                        </Top>
-                        <Detail>
-                            <Label>STATUS</Label>
-                            <Text>{delivery.status.label}</Text>
-                        </Detail>
-                        <DetailRow>
+        <>
+            <Container>
+                <Header />
+                <Content>
+                    <Cards>
+                        <Card>
+                            <Top>
+                                <Icon
+                                    name="local-shipping"
+                                    size={20}
+                                    color="#7d40e7"
+                                />
+                                <CardTitle>Informações da entrega</CardTitle>
+                            </Top>
                             <Detail>
-                                <Label>DATA DE RETIRADA</Label>
-                                <Text>{dateStartParsed}</Text>
+                                <Label>DESTINATÁRIO</Label>
+                                <Text>{delivery.recipient.name}</Text>
                             </Detail>
                             <Detail>
-                                <Label>DATA DE ENTREGA</Label>
-                                <Text>{dateEndParsed}</Text>
+                                <Label>ENDEREÇO DE ENTREGA</Label>
+                                <Text>{address}</Text>
                             </Detail>
-                        </DetailRow>
-                    </Card>
-                </Cards>
-                <Buttons>
-                    <Button
-                        onPress={() =>
-                            navigation.navigate('DeliveryForm', {
-                                delivery,
-                            })
-                        }
-                    >
-                        <ButtonIcon>
-                            <Icon
-                                name="highlight-off"
-                                size={20}
-                                color="#E74040"
-                            />
-                        </ButtonIcon>
+                            <Detail>
+                                <Label>PRODUTO</Label>
+                                <Text>{delivery.product}</Text>
+                            </Detail>
+                        </Card>
+                        <Card>
+                            <Top>
+                                <Icon name="event" size={20} color="#7d40e7" />
+                                <CardTitle>Situação da entrega</CardTitle>
+                            </Top>
+                            <Detail>
+                                <Label>STATUS</Label>
+                                <Text>{delivery.status.label}</Text>
+                            </Detail>
+                            <DetailRow>
+                                <Detail>
+                                    <Label>DATA DE RETIRADA</Label>
+                                    <Text>{dateStartParsed}</Text>
+                                </Detail>
+                                <Detail>
+                                    <Label>DATA DE ENTREGA</Label>
+                                    <Text>{dateEndParsed}</Text>
+                                </Detail>
+                            </DetailRow>
+                        </Card>
+                    </Cards>
+                    <Buttons>
+                        <Button
+                            onPress={() =>
+                                navigation.navigate('DeliveryForm', {
+                                    delivery,
+                                })
+                            }
+                        >
+                            <ButtonIcon>
+                                <Icon
+                                    name="highlight-off"
+                                    size={20}
+                                    color="#E74040"
+                                />
+                            </ButtonIcon>
 
-                        <ButtonText>Informar Problema</ButtonText>
-                    </Button>
-                    <Button
-                        onPress={() =>
-                            navigation.navigate('DeliveryProblems', {
-                                delivery,
-                            })
-                        }
-                    >
-                        <Icon name="info-outline" size={20} color="#E7BA40" />
-                        <ButtonText>Visualizar Problemas</ButtonText>
-                    </Button>
-                    <Button>
-                        <Icon name="alarm-on" size={20} color="#7D40E7" />
-                        <ButtonText>Confirmar Entrega</ButtonText>
-                    </Button>
-                </Buttons>
-            </Content>
-        </Container>
+                            <ButtonText>Informar Problema</ButtonText>
+                        </Button>
+                        <Button
+                            onPress={() =>
+                                navigation.navigate('DeliveryProblems', {
+                                    delivery,
+                                })
+                            }
+                        >
+                            <Icon
+                                name="info-outline"
+                                size={20}
+                                color="#E7BA40"
+                            />
+                            <ButtonText>Visualizar Problemas</ButtonText>
+                        </Button>
+                        <Button>
+                            <Icon name="alarm-on" size={20} color="#7D40E7" />
+                            <ButtonText>Confirmar Entrega</ButtonText>
+                        </Button>
+                    </Buttons>
+                </Content>
+            </Container>
+        </>
     );
 }
 

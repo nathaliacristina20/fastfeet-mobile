@@ -4,7 +4,10 @@ export const Container = styled.View`
     flex: 1;
 `;
 export const Content = styled.View`
-    margin: 68px 20px 30px 20px;
+    margin: 10px 20px 0 20px;
+    width: 90%;
+    flex: 1;
+    margin-top: -60px;
 `;
 
 export const Title = styled.Text`
