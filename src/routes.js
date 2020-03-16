@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -13,6 +12,7 @@ import Profile from './pages/Profile';
 import DeliveryProblems from './pages/Delivery/Problems';
 import DeliveryForm from './pages/Delivery/Problems/Form';
 import DeliveryDetail from '~/pages/Delivery/Detail';
+import DeliveryConfirm from '~/pages/Delivery/Confirm';
 
 export default (signedIn = false) =>
     createAppContainer(
@@ -30,6 +30,7 @@ export default (signedIn = false) =>
                                     DeliveryDetail,
                                     DeliveryProblems,
                                     DeliveryForm,
+                                    DeliveryConfirm,
                                 },
                                 {
                                     defaultNavigationOptions: {

@@ -6,3 +6,8 @@ export const Header = styled.View`
     height: 70px;
     position: relative;
 `;
+
+export const Background = styled.View`
+    height: 60px;
+    background-color: #7159c1;
+`;
