@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
 import { parseISO, format } from 'date-fns';
@@ -22,6 +22,8 @@ import {
     ButtonText,
     Header,
 } from './styles';
+
+import api from '~/services/api';
 
 export default function DeliveryDetail({ navigation }) {
     const [delivery] = useState(navigation.getParam('delivery'));
@@ -45,6 +47,19 @@ export default function DeliveryDetail({ navigation }) {
               })
             : '--/--/--';
     }, []);
+
+    async function handleRetiredDelivery() {
+        try {
+            await api.put(
+                `/deliveryman/${delivery.deliveryman.id}/deliveries/${delivery.id}`,
+                { start_date: new Date() }
+            );
+            Alert.alert('Encomenda retirada!');
+            navigation.navigate('Dashboard');
+        } catch (err) {
+            Alert.alert('Houve um erro ao tentar salvar a imagem.');
+        }
+    }
 
     return (
         <>
@@ -127,16 +142,34 @@ export default function DeliveryDetail({ navigation }) {
                             />
                             <ButtonText>Visualizar Problemas</ButtonText>
                         </Button>
-                        <Button
-                            onPress={() =>
-                                navigation.navigate('DeliveryConfirm', {
-                                    delivery,
-                                })
-                            }
-                        >
-                            <Icon name="alarm-on" size={20} color="#7D40E7" />
-                            <ButtonText>Confirmar Entrega</ButtonText>
-                        </Button>
+
+                        {delivery.start_date === null && (
+                            <Button onPress={handleRetiredDelivery}>
+                                <Icon
+                                    name="alarm-on"
+                                    size={20}
+                                    color="#7D40E7"
+                                />
+                                <ButtonText>Retirar Encomenda</ButtonText>
+                            </Button>
+                        )}
+
+                        {delivery.start_date !== null && (
+                            <Button
+                                onPress={() =>
+                                    navigation.navigate('DeliveryConfirm', {
+                                        delivery,
+                                    })
+                                }
+                            >
+                                <Icon
+                                    name="check-circle"
+                                    size={20}
+                                    color="#7D40E7"
+                                />
+                                <ButtonText>Confirmar Entrega</ButtonText>
+                            </Button>
+                        )}
                     </Buttons>
                 </Content>
             </Container>

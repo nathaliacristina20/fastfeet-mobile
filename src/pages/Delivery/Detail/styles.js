@@ -96,6 +96,6 @@ export const ButtonIcon = styled.View`
 export const ButtonText = styled.Text`
     font-size: 12px;
     color: #999999;
-    max-width: 60px;
+    max-width: 65px;
     text-align: center;
 `;

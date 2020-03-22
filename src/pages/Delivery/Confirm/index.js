@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Alert, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -27,6 +27,15 @@ export default function DeliveryConfirm({ navigation }) {
     const [flash] = useState('off');
 
     const [preview, setPreview] = useState(false);
+    const [delivered, setDelivered] = useState(false);
+
+    useEffect(() => {
+        if (delivery.signature && delivery.signature.url) {
+            setPreview({ uri: delivery.signature.url });
+            setDelivered(true);
+        }
+    }, []);
+
     async function takePicture() {
         const data = await cameraRef.current.takePictureAsync({
             quality: 0.5,
@@ -69,9 +78,11 @@ export default function DeliveryConfirm({ navigation }) {
                 {preview ? (
                     <>
                         <Image source={{ uri: preview.uri }} />
-                        <SubmitButton onPress={handleSubmit}>
-                            Enviar
-                        </SubmitButton>
+                        {!delivered && (
+                            <SubmitButton onPress={handleSubmit}>
+                                Enviar
+                            </SubmitButton>
+                        )}
                     </>
                 ) : (
                     <CameraWrapper>

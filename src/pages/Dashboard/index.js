@@ -144,11 +144,6 @@ export default function Dashboard({ navigation }) {
                     </Logout>
                 </Header>
                 <Body>
-                    {!loading && deliveries.length < 1 && (
-                        <DefaultEmptyMessage>
-                            Não há registros a serem exibidos.
-                        </DefaultEmptyMessage>
-                    )}
                     <BodyHeader>
                         <DeliverymanName>Entregas</DeliverymanName>
                         <Options>
@@ -164,6 +159,13 @@ export default function Dashboard({ navigation }) {
                             ))}
                         </Options>
                     </BodyHeader>
+
+                    {!loading && deliveries.length < 1 && (
+                        <DefaultEmptyMessage>
+                            Não há registros a serem exibidos.
+                        </DefaultEmptyMessage>
+                    )}
+
                     {loading ? (
                         <Loading>
                             <ActivityIndicator color="#ddd" size={50} />
