@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Container, Content, TextArea, SubmitButton } from './styles';
 import api from '~/services/api';
 
-import { Header } from '~/styles/global';
+import { Background } from '~/styles/global';
 
 export default function DeliveryForm({ navigation }) {
     const [description, setDescription] = useState(null);
@@ -33,7 +33,7 @@ export default function DeliveryForm({ navigation }) {
 
     return (
         <Container>
-            <Header />
+            <Background />
             <Content>
                 <TextArea
                     textAlignVertical="top"

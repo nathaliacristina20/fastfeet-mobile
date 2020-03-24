@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import PropTypes from 'prop-types';
+import { withNavigationFocus } from 'react-navigation';
+
 import {
     Container,
     Content,
@@ -27,7 +29,7 @@ import api from '~/services/api';
 import { signOut } from '~/store/modules/auth/actions';
 import Delivery from '~/components/Delivery';
 
-export default function Dashboard({ navigation }) {
+function Dashboard({ navigation, isFocused }) {
     const dispatch = useDispatch();
     const [deliveryman] = useState(
         useSelector(state => state.auth.deliveryman)
@@ -46,34 +48,36 @@ export default function Dashboard({ navigation }) {
     const [status, setStatus] = useState(1);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setLoading(true);
-        async function loadDeliveries() {
-            try {
-                const response = await api.get(
-                    `deliveryman/${deliveryman.id}/deliveries`,
-                    {
-                        params: {
-                            page,
-                            perPage: 3,
-                            status,
-                        },
-                    }
-                );
-
-                setNumberOfPages(response.data.numberOfPages);
-                setDeliveries(response.data.deliveries);
-            } catch (err) {
-                if (err.response.status === 400) {
-                    Alert.alert('Falha', err.response.data.error);
-                } else {
-                    Alert.alert('Falha', 'Ocorreu um erro inesperado.');
+    async function loadDeliveries() {
+        try {
+            const response = await api.get(
+                `deliveryman/${deliveryman.id}/deliveries`,
+                {
+                    params: {
+                        page,
+                        perPage: 3,
+                        status,
+                    },
                 }
-            }
+            );
+
+            setNumberOfPages(response.data.numberOfPages);
+            setDeliveries(response.data.deliveries);
             setLoading(false);
+        } catch (err) {
+            if (err.response.status === 400) {
+                Alert.alert('Falha', err.response.data.error);
+            } else {
+                Alert.alert('Falha', 'Ocorreu um erro inesperado.');
+            }
         }
-        loadDeliveries();
-    }, [status]);
+    }
+
+    useEffect(() => {
+        if (isFocused) {
+            loadDeliveries();
+        }
+    }, [isFocused, status]);
 
     async function loadMore() {
         if (page + 1 > numberOfPages) {
@@ -202,4 +206,4 @@ Dashboard.propTypes = {
         .isRequired,
 };
 
-Dashboard.defaultProps = {};
+export default withNavigationFocus(Dashboard);
