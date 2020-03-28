@@ -45,3 +45,10 @@ export const Loading = styled.View`
     align-items: center;
     margin-top: 50px;
 `;
+
+export const DefaultEmptyMessage = styled.Text`
+    margin-top: 50px;
+    color: #666666;
+    font-size: 12px;
+    text-align: center;
+`;

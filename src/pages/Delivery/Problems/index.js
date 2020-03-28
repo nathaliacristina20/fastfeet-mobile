@@ -4,7 +4,6 @@ import { Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 import { parseISO, format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
 import api from '~/services/api';
 import {
     Container,
@@ -15,9 +14,8 @@ import {
     ProblemDescription,
     ProblemDate,
     Loading,
+    DefaultEmptyMessage,
 } from './styles';
-
-import DefaultEmptyMessage from '~/components/DefaultEmptyMessage';
 
 import { Background } from '~/styles/global';
 
@@ -29,29 +27,29 @@ export default function DeliveryProblems({ navigation }) {
     useEffect(() => {
         async function loadProblems() {
             try {
-                const { data } = await api.get(
+                const response = await api.get(
                     `delivery/${delivery.id}/problems`
                 );
 
-                const dataFormatted = data.map(problem => ({
-                    ...problem,
-                    createdAt: format(
-                        parseISO(delivery.updatedAt),
-                        "dd'/'MM'/'yyyy",
-                        {
-                            locale: pt,
-                        }
-                    ),
-                }));
-                setProblems(dataFormatted);
+                if (response.data !== null) {
+                    const dataFormatted = response.data.map(problem => ({
+                        ...problem,
+                        createdAt: format(
+                            parseISO(delivery.updatedAt),
+                            "dd'/'MM'/'yyyy"
+                        ),
+                    }));
+                    setProblems(dataFormatted);
+                }
+                setLoading(false);
             } catch (err) {
-                if (err.response.status === 400) {
+                if (err.response && err.response.status === 400) {
                     Alert.alert('Falha', err.response.data.error);
                 } else {
                     Alert.alert('Falha', 'Ocorreu um erro inesperado.');
                 }
+                setLoading(false);
             }
-            setLoading(false);
         }
         loadProblems();
     }, []);
@@ -62,13 +60,19 @@ export default function DeliveryProblems({ navigation }) {
             <Content>
                 <Title>{delivery.product}</Title>
 
-                <DefaultEmptyMessage loading={loading} data={problems} />
+                {!loading && problems.length < 1 && (
+                    <DefaultEmptyMessage>
+                        Não há registros a serem exibidos.
+                    </DefaultEmptyMessage>
+                )}
 
-                {loading ? (
+                {loading && (
                     <Loading>
                         <ActivityIndicator color="#ddd" size={50} />
                     </Loading>
-                ) : (
+                )}
+
+                {!loading && problems.length > 0 && (
                     <>
                         <Problems
                             data={problems}

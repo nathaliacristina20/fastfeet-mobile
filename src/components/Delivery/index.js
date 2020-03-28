@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 import { parseISO, format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
 import {
     Container,
     Content,
@@ -22,9 +21,7 @@ import Progress from '~/components/Progress';
 
 export default function Delivery({ navigation, delivery }) {
     const dataUpdatedAtParsed = useMemo(() => {
-        return format(parseISO(delivery.updatedAt), "dd'/'MM'/'yyyy", {
-            locale: pt,
-        });
+        return format(parseISO(delivery.updatedAt), "dd'/'MM'/'yyyy", {});
     }, []);
 
     return (

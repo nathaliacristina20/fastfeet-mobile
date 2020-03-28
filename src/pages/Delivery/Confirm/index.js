@@ -64,12 +64,9 @@ export default function DeliveryConfirm({ navigation }) {
             Alert.alert('Registro salvo com sucesso!');
             navigation.navigate('Dashboard');
         } catch (err) {
-            console.tron.log(err);
             Alert.alert('Houve um erro ao tentar salvar a imagem.');
         }
     }
-
-    const [loading, setLoading] = useState(true);
 
     return (
         <Container>

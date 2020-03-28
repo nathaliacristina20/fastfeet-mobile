@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { parseISO, format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
 import { signOut } from '~/store/modules/auth/actions';
 import {
     Container,
@@ -22,9 +21,7 @@ export default function Profile() {
     const deliveryman = useSelector(state => state.auth.deliveryman);
 
     const dateParsed = useMemo(() => {
-        return format(parseISO(deliveryman.createdAt), "dd'/'MM'/'yyyy", {
-            locale: pt,
-        });
+        return format(parseISO(deliveryman.createdAt), "dd'/'MM'/'yyyy", {});
     }, []);
 
     function handleLogout() {

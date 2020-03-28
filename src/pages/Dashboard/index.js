@@ -50,7 +50,7 @@ function Dashboard({ navigation, isFocused }) {
 
     async function loadDeliveries() {
         try {
-            const response = await api.get(
+            const { data, headers } = await api.get(
                 `deliveryman/${deliveryman.id}/deliveries`,
                 {
                     params: {
@@ -61,8 +61,8 @@ function Dashboard({ navigation, isFocused }) {
                 }
             );
 
-            setNumberOfPages(response.data.numberOfPages);
-            setDeliveries(response.data.deliveries);
+            setNumberOfPages(headers['x-pages-count']);
+            setDeliveries(data);
             setLoading(false);
         } catch (err) {
             if (err.response.status === 400) {
@@ -95,9 +95,7 @@ function Dashboard({ navigation, isFocused }) {
                 }
             );
 
-            const deliveriesPagesConcat = deliveries.concat(
-                response.data.deliveries
-            );
+            const deliveriesPagesConcat = deliveries.concat(response.data);
 
             setPage(page + 1);
             setDeliveries(deliveriesPagesConcat);
@@ -204,6 +202,9 @@ Dashboard.navigationOptions = {
 Dashboard.propTypes = {
     navigation: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
         .isRequired,
+    isFocused: PropTypes.bool.isRequired,
 };
+
+Dashboard.defaultProps = {};
 
 export default withNavigationFocus(Dashboard);

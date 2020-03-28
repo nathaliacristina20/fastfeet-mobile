@@ -4,7 +4,6 @@ import { Alert, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 
 import { parseISO, format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
 import {
     Container,
     Content,
@@ -34,17 +33,13 @@ export default function DeliveryDetail({ navigation }) {
 
     const dateStartParsed = useMemo(() => {
         return delivery.start_date
-            ? format(parseISO(delivery.start_date), "dd'/'MM'/'yyyy", {
-                  locale: pt,
-              })
+            ? format(parseISO(delivery.start_date), "dd'/'MM'/'yyyy", {})
             : '--/--/--';
     }, []);
 
     const dateEndParsed = useMemo(() => {
         return delivery.end_date
-            ? format(parseISO(delivery.end_date), "dd'/'MM'/'yyyy", {
-                  locale: pt,
-              })
+            ? format(parseISO(delivery.end_date), "dd'/'MM'/'yyyy", {})
             : '--/--/--';
     }, []);
 

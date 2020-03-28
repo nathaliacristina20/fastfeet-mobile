@@ -5,9 +5,9 @@ import { Container, List, ContainerT, Circle, StepT, Name } from './styles';
 
 export default function Progress({ stepActive }) {
     const [progress] = useState([
-        { key: 1, label: 'Aguardando Retirada', active: true },
-        { key: 4, label: 'Retirada', active: false },
-        { key: 3, label: 'Entregue', active: false },
+        { key: '1', label: 'Aguardando Retirada', active: true },
+        { key: '4', label: 'Retirada', active: false },
+        { key: '3', label: 'Entregue', active: false },
     ]);
 
     const [steps, setSteps] = useState([]);
@@ -35,7 +35,7 @@ export default function Progress({ stepActive }) {
             setLoading(false);
         }
         loadSteps();
-    }, []);
+    }, [stepActive]);
 
     return (
         <Container>
@@ -61,9 +61,8 @@ export default function Progress({ stepActive }) {
 }
 
 Progress.propTypes = {
-    // progress: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
-    // .isRequired,
-    stepActive: PropTypes.number.isRequired,
+    stepActive: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+        .isRequired,
 };
 
 Progress.defaultProps = {};
